@@ -5,25 +5,29 @@ let prices = {
     "Pure 900": 3500
 };
 
-function updatePrice(){
-    const turboDropdown = document.getElementById(`turbo-options`);
+function updatePrice() {
+    const turboDropdown = document.getElementById('turbo-options');
     const selectedTurbo = turboDropdown.value;
-    const priceDisplay = document.getElementById(`product-price`);
+    const priceDisplay = document.getElementById('product-price');
 
     const newPrice = prices[selectedTurbo];
     priceDisplay.textContent = `$${newPrice}`;
 
-    const selectedOption =turboDropdown.options[turboDropdown.selectedindex];
-    const availability = selectedOption.getAttribute(`data-available`);
+    const selectedOption = turboDropdown.options[turboDropdown.selectedIndex];
+    const availability = selectedOption.getAttribute('data-availability');
 
-    const purchaseButton.disabled = document.getElementById('purchase-button');
-    if (availability === 'out-of-stock'){
-        purchaseButton.disabled = true;
-    }
-    else{
-        purchaseButton.disabled = false;
-    }
+    const purchaseButton = document.getElementById('purchase-button');
+    purchaseButton.disabled = availability === 'out-of-stock';
 }
 
-const turboDropdown = document.getElementById(`turbo-options`);
-turboDropdown.addEventListener(`change`, updatePrice);
+function purchaseAlert() {
+    const turboDropdown = document.getElementById('turbo-options');
+    const selectedOption = turboDropdown.options[turboDropdown.selectedIndex];
+    const availability = selectedOption.getAttribute('data-availability');
+
+    if (availability === 'in-stock') {
+        alert(`Your purchase of the ${turboDropdown.value} has been completed.`);
+    } else {
+        alert(`Sorry, the requested item is currently out of stock.`);
+    }
+}
